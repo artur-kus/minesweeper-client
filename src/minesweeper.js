@@ -17,6 +17,10 @@ export function initializeGame() {
     app.view.style.left = '50%';
     app.view.style.transform = 'translateX(-50%)';
 
+    app.view.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+    });
+
     // window.addEventListener('resize', () => {
     //     app.renderer.resize(window.innerWidth, window.innerHeight);
     // });
@@ -42,7 +46,7 @@ export function renderGameTable(app, tableData) {
             let padding = 10;
             let cellX = 20 + colIndex * cellWidth + padding * colIndex;
             let cellY = 20 + rowIndex * cellHeight + padding * rowIndex;
-            let cell = createCellGraphic(cellX,cellY,cellWidth, cellHeight, cellData);
+            let cell = createCellGraphic(cellX, cellY, cellWidth, cellHeight, cellData);
             cell.interactive = true;
 
             cell.on('rightdown', (event) => {
@@ -51,10 +55,6 @@ export function renderGameTable(app, tableData) {
 
             cell.on('mousedown', (event) => {
                 sendAction(rowIndex, colIndex, 'CLICK');
-            });
-
-            app.view.addEventListener('contextmenu', (event) => {
-                event.preventDefault();
             });
 
             container.addChild(cell);
