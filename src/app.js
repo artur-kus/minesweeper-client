@@ -12,6 +12,9 @@ stompClient.onConnect = (frame) => {
     stompClient.subscribe('/topic/game-update', (update) => {
         handleUpdate(board, JSON.parse(update.body));
     });
+    stompClient.subscribe('/topic/server-msg', (update) => {
+            console.log(new TextDecoder().decode(update._binaryBody));
+    });
 };
 
 function handleUpdate(board, update) {
