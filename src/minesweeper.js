@@ -38,8 +38,8 @@ export function renderGameTable(app, tableData) {
     }
     container.destroy();
     container = new PIXI.Container();
-    const cellWidth = (window.innerWidth * 0.85) / tableData[0].length;
-    const cellHeight = (window.innerHeight * 0.85) / tableData.length;
+    const cellWidth = (window.innerWidth * 0.8) / tableData[0].length;
+    const cellHeight = (window.innerHeight * 0.8) / tableData.length;
 
     tableData.forEach(function (rowData, rowIndex) {
         rowData.forEach(function (cellData, colIndex) {
@@ -79,13 +79,10 @@ function createCellGraphic(x,y,cellWidth, cellHeight, cellData) {
     let cellGraphics = new PIXI.Graphics();
     
     if(cellData === ''){
-        cellGraphics.beginFill(0x11677B, 1); // Czarny kwadrat (0x000000)
+        cellGraphics.beginFill(0x11677B, 1);
     } else {
-        cellGraphics.beginFill(0x61677A, 1); // Czarny kwadrat (0x000000)
+        cellGraphics.beginFill(0x61677A, 1);
     }
-
-
-
 
     cellGraphics.drawRoundedRect(x, y, cellWidth, cellHeight, 10);
     return cellGraphics;
@@ -94,7 +91,7 @@ function createCellGraphic(x,y,cellWidth, cellHeight, cellData) {
 function generateText(x,y,cellWidth, cellHeight, text) {
     const cellText = new PIXI.Text(text, {
         fontFamily: 'Arial',
-        fontSize: 40 * 0.85,
+        fontSize: 40 * 0.8,
         fill: 0xFFFFFF, // Zielony tekst (0x00FF00)
     });
     cellText.position.set(x,y);

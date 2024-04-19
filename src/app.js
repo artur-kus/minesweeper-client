@@ -1,14 +1,15 @@
 import {initializeGame, renderGameTable, updateMineCounter} from './minesweeper.js';
 
 const stompClient = new StompJs.Client({
-    brokerURL: 'ws://127.0.0.1:8080/gs-guide-websocket',
+    brokerURL: 'wss://wheeler.bieda.it/minesweeper-socket',
+    //brokerURL: 'ws://127.0.0.1:8080/minesweeper-socket',
 });
 
 stompClient.onConnect = (frame) => {
     setConnected(true);
     console.log('Connected: ' + frame);
     const board = initializeGame();
-    stompClient.subscribe('/topic/greetings', (update) => {
+    stompClient.subscribe('/topic/game-update', (update) => {
         handleUpdate(board, JSON.parse(update.body));
     });
 };
@@ -49,10 +50,11 @@ function disconnect() {
     console.log("Disconnected");
 }
 
+let username = 'anon' + Math.floor(Math.random()*1000);
 export function sendAction(row, col, action) {
     stompClient.publish({
-        destination: "/app/hello",
-        body: JSON.stringify({'row': row, 'col': col, 'action': action})
+        destination: "/app/player-action",
+        body: JSON.stringify({'row': row, 'col': col, 'action': action, 'username': username})
     });
 }
 
